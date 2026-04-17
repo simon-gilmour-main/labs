@@ -7,7 +7,6 @@ pipeline {
 
   parameters {
     choice(name: 'ACTION', choices: ['apply', 'destroy'], description: 'Terraform action')
-    string(name: 'ALLOWED_CIDR', defaultValue: 'YOUR_PUBLIC_IP/32', description: 'Your laptop public IP in CIDR format')
   }
 
   environment {
