@@ -43,8 +43,6 @@ pipeline {
         dir('infra-demo/terraform') {
           sh '''
             terraform plan \
-              -var-file=dev.tfvars \
-              -var="allowed_cidr=${ALLOWED_CIDR}" \
               -out=tfplan
           '''
         }
@@ -78,9 +76,7 @@ pipeline {
       steps {
         dir('infra-demo/terraform') {
           sh '''
-            terraform destroy -auto-approve \
-              -var-file=dev.tfvars \
-              -var="allowed_cidr=${ALLOWED_CIDR}"
+            terraform destroy -auto-approve"
           '''
         }
       }
