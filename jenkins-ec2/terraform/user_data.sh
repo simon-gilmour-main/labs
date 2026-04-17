@@ -3,6 +3,18 @@ set -euxo pipefail
 
 dnf update -y
 
+# Make /tmp disk-backed instead of tmpfs
+systemctl stop tmp.mount || true
+systemctl disable tmp.mount || true
+systemctl mask tmp.mount || true
+
+sed -i '\|[[:space:]]/tmp[[:space:]]|d' /etc/fstab || true
+
+umount /tmp || true
+rm -rf /tmp
+mkdir -p /tmp
+chmod 1777 /tmp
+
 dnf install -y java-21-amazon-corretto nginx git wget
 
 wget -O /etc/yum.repos.d/jenkins.repo \
@@ -58,3 +70,5 @@ systemctl enable nginx
 systemctl restart nginx
 
 terraform version
+df -h /tmp
+mount | grep ' /tmp ' || true
