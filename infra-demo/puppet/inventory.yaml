@@ -1,0 +1,9 @@
+groups:
+  - name: demo
+    targets:
+      - uri: REPLACE_ME
+        config:
+          transport: ssh
+          user: ec2-user
+          ssh:
+            private-key: /var/lib/jenkins/.ssh/ec2_demo_key
