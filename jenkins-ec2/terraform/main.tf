@@ -39,6 +39,33 @@ data "aws_ami" "amazon_linux_2023" {
   }
 }
 
+resource "aws_iam_role" "jenkins_ec2_role" {
+  name = "jenkins-ec2-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Principal = {
+          Service = "ec2.amazonaws.com"
+        }
+        Action = "sts:AssumeRole"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "jenkins_ec2_ec2full" {
+  role       = aws_iam_role.jenkins_ec2_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2FullAccess"
+}
+
+resource "aws_iam_instance_profile" "jenkins_ec2_profile" {
+  name = "jenkins-ec2-profile"
+  role = aws_iam_role.jenkins_ec2_role.name
+}
+
 resource "aws_security_group" "jenkins" {
   name        = "jenkins-ec2-sg"
   description = "Security group for Jenkins EC2"
@@ -85,6 +112,8 @@ resource "aws_instance" "jenkins" {
     volume_type           = "gp3"
     delete_on_termination = true
   }
+
+  iam_instance_profile = aws_iam_instance_profile.jenkins_ec2_profile.name
 
   user_data = file("${path.module}/user_data.sh")
 
