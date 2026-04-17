@@ -18,3 +18,9 @@ variable "key_name" {
   description = "Optional EC2 key pair name for SSH"
   default     = null
 }
+ 
+variable "root_volume_size" {
+  description = "Size of the root EBS volume in GB"
+  type        = number
+  default     = 20
+}

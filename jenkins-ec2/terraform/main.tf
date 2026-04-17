@@ -80,6 +80,12 @@ resource "aws_instance" "jenkins" {
   associate_public_ip_address = true
   key_name                    = var.key_name
 
+  root_block_device {
+    volume_size           = var.root_volume_size
+    volume_type           = "gp3"
+    delete_on_termination = true
+  }
+
   user_data = file("${path.module}/user_data.sh")
 
   tags = {
