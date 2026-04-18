@@ -75,7 +75,7 @@ pipeline {
       steps {
         dir('infra-demo/terraform') {
           sh '''
-            terraform destroy -auto-approve"
+            terraform destroy -auto-approve
           '''
         }
       }
