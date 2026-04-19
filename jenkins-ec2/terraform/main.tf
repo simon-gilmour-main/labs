@@ -66,11 +66,6 @@ resource "aws_iam_instance_profile" "jenkins_ec2_profile" {
   role = aws_iam_role.jenkins_ec2_role.name
 }
 
-resource "aws_security_group" "jenkins" {
-  name        = "jenkins-ec2-sg"
-  description = "Security group for Jenkins EC2"
-  vpc_id      = data.aws_vpc.default.id
-
 resource "aws_iam_role_policy" "jenkins_iam_for_ec2_roles" {
   name = "jenkins-iam-for-ec2-roles"
   role = aws_iam_role.jenkins_ec2_role.id
@@ -99,6 +94,11 @@ resource "aws_iam_role_policy" "jenkins_iam_for_ec2_roles" {
     ]
   })
 }
+
+resource "aws_security_group" "jenkins" {
+  name        = "jenkins-ec2-sg"
+  description = "Security group for Jenkins EC2"
+  vpc_id      = data.aws_vpc.default.id
 
   ingress {
     description = "HTTP to nginx"
