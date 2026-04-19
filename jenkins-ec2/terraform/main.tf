@@ -71,6 +71,35 @@ resource "aws_security_group" "jenkins" {
   description = "Security group for Jenkins EC2"
   vpc_id      = data.aws_vpc.default.id
 
+resource "aws_iam_role_policy" "jenkins_iam_for_ec2_roles" {
+  name = "jenkins-iam-for-ec2-roles"
+  role = aws_iam_role.jenkins_ec2_role.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "iam:CreateRole",
+          "iam:DeleteRole",
+          "iam:GetRole",
+          "iam:TagRole",
+          "iam:AttachRolePolicy",
+          "iam:DetachRolePolicy",
+          "iam:PassRole",
+          "iam:CreateInstanceProfile",
+          "iam:DeleteInstanceProfile",
+          "iam:GetInstanceProfile",
+          "iam:AddRoleToInstanceProfile",
+          "iam:RemoveRoleFromInstanceProfile"
+        ]
+        Resource = "*"
+      }
+    ]
+  })
+}
+
   ingress {
     description = "HTTP to nginx"
     from_port   = 80
