@@ -24,6 +24,8 @@ rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2026.key
 
 dnf install -y jenkins
 
+dnf install -y docker
+
 dnf config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
 dnf install -y terraform
 

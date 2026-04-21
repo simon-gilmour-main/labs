@@ -79,15 +79,23 @@ resource "aws_iam_role_policy" "jenkins_iam_for_ec2_roles" {
           "iam:CreateRole",
           "iam:DeleteRole",
           "iam:GetRole",
-          "iam:TagRole",
+          "iam:ListRolePolicies",
+          "iam:ListAttachedRolePolicies",
+          "iam:PutRolePolicy",
+          "iam:DeleteRolePolicy",
           "iam:AttachRolePolicy",
           "iam:DetachRolePolicy",
           "iam:PassRole",
+          "iam:TagRole",
+          "iam:UntagRole",
           "iam:CreateInstanceProfile",
           "iam:DeleteInstanceProfile",
           "iam:GetInstanceProfile",
+          "iam:TagInstanceProfile",
+          "iam:UntagInstanceProfile",
           "iam:AddRoleToInstanceProfile",
-          "iam:RemoveRoleFromInstanceProfile"
+          "iam:RemoveRoleFromInstanceProfile",
+          "iam:ListInstanceProfilesForRole"
         ]
         Resource = "*"
       }
